@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>{% load staticfiles %}
+<html>
+  <head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-responsive.css' %}" />
+    
+    <script type="text/javascript" src="{% static 'js/jquery-1.9.1.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+  </head>
+  <body>
+    <div class="container">
+    
+      <header>
+        <div class="navbar navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <a href="/"><img src="{% static 'img/logo.png' %}" alt="Paint!" style="width:100px;margin:20px 0 20px 0"></a>
+              <span style="color:#afafaf;">The largest collection of paintings</span>
+              <div class="pull-right">
+                <img src="{% static 'img/social-icons.png' %}" style="cursor:pointer;height:80px;margin:3px 20px 0 0;" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      
+    <form method="post" action="transaction/">
+      {% csrf_token %}
+      {% for product in products %}
+      <input type="hidden" name="product_id" value="{{ product.id }}">
+      <input type="hidden" name="product_name" value="{{ product.name }}">
+      <input type="hidden" name="product_amount" value="{{ product.price }}">
+        <div class="content row-fluid" style="margin:80px 0 0 0;">
+          <div class="span6">
+            <div class="row-fluid">
+              <div class="span12">
+                <h3 id="pic-title">You're buying "{{ product.name }}" for <span id="pic-price" style="text-align:center;color:red;padding:10px;">${{product.price}}</span></h3>
+                <img id="pic-image" class="img-polaroid" src="../{{ product.large_image }}" />
+      {% endfor %}
+              </div>
+            </div>
+          </div>
+          
+          <div class="span6 well">
+            <h3>Fill Form To Process {{ id }}</h3>
+              <div class="row-fluid">
+                <div class="span6">
+                  <table>
+                    <tr>
+                      <td>
+                        <label for="fullname">Full Name<br>
+                        <input type="text" maxlength="200" value="" name="fullname" placeholder="Full name" required />
+                        </label>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="span6">
+                  <table>
+                    <tr>
+                      <td>
+                        <div class="btn-toolbar">
+                          <div class="btn-group">
+                            <input id="payment-button" type="button" onclick="togglePayment()" class="btn btn-danger btn-small" value="Please Fill Out Payment To Submit Form" name="button" />
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              
+              <div id="payment-information" class="row-fluid" style="display:none">
+                <div class="span12">
+                  <h4>Payment Information</h4>
+                  <table>
+                    <tr>
+                      <td>
+                        <label>Credit Card<br>
+                        <input type="text" name="card_no" maxlength="16" placeholder="Credit Card" onkeyup="checkPayment()" value="" required />
+                        </label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label>Expiration (YYYY-MM)<br>
+                        <input type="month" name="expiration" maxlength="6" placeholder="Expiration" value="" required>
+                        </label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label>CVV<br>
+                        <input type="text" class="input-small" maxlength="4" name="cvv" placeholder="CVV" value=""required>
+                        </label>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              
+              <div class="row-fluid">
+                <div class="span6">
+                  <h4>Shipping Address</h4>
+                  <table>
+                    <tr>
+                      <td>
+                        <label for="shipping_address">Shipping Address<br>
+                        <input type="text" value="" maxlength="200" name="ship_address" placeholder="Shipping Address" required />
+                        </label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="shipping_city">City<br>
+                        <input type="text" value="" maxlength="200" name="ship_city" placeholder="City" required />
+                        </label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="shipping_state">State<br>
+                        <input type="text" value="" maxlength="2" name="ship_state" placeholder="State" required />
+                        </label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="shipping_zip">Zip<br>
+                        <input type="text" value="" maxlength="5" name="ship_zip" placeholder="Zip Code" required />
+                        </label>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                
+                <div class="span6">
+                  <h4>Billing Address</h4>
+                  <table>
+                    <tr>
+                      <td>
+                        <label for="billing_address">Billing Address<br>
+                        <input type="text" value="" maxlength="200" name="bill_address" placeholder="Billing Address" required />
+                        </label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="billing_city">City<br>
+                        <input type="text" value="" maxlength="200" name="bill_city" placeholder="City" required />
+                        </label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="billing_state">State<br>
+                        <input type="text" value="" maxlength="2" name="bill_state" placeholder="State" required />
+                        </label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="billing_zip">Zip<br>
+                        <input type="text" value="" maxlength="5" name="bill_zip" placeholder="Zip Code" required />
+                        </label>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <div class="row-fluid">
+                <div class="span12">
+                  <table>
+                    <tr>
+                      <td>
+                        <div class="btn-toolbar">
+                          <div class="btn-group">
+                            <input type="submit" class="btn btn-primary btn-large" value="Order" name="order-button" />
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+          </div>
+        </div>
+        
+      </form>
+      
+    </div><!-- .container -->
+    
+    
+    </div>
+  </body>
+</html>

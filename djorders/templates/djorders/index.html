@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>{% load staticfiles %}
+</html>
+  <head>
+    <title>Signup</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-responsive.css' %}" />
+    
+    <script type="text/javascript" src="{% static 'js/jquery-1.9.1.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+  </head>
+  <body style="bacgkround-color:#0e0e0e">
+    <div class="container">
+    
+      <header>
+        <div class="navbar navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <img src="{% static 'img/logo.png' %}" alt="Paint!" style="width:100px;margin:20px 0 20px 0">
+              <span style="color:#afafaf;">The largest collection of paintings</span>
+              <div class="pull-right">
+                <img src="{% static 'img/social-icons.png' %}" style="cursor:pointer;height:80px;margin:3px 20px 0 0;" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      
+      <!-- Modal Start -->
+      <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+          <h3 id="pic-name">Modal header</h3>
+        </div>
+        <div class="modal-body">
+          <div class="row-fluid">
+            <div class="span6">
+              <img id="pic-image" class="img-polaroid" src="" />
+            </div>
+            <div class="span6">
+              <h2 id="pic-price" style="text-align:center;color:red;padding:10px;border-bottom:2px double #afafaf;border-top:2px double #afafaf;border-radius:10px;">Price!<h2>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <form name="orders" action="orders/" method="post">
+            {% csrf_token %}
+            <input id="productId" type="hidden" name="productId">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+            <input class="btn btn-primary" value="Order Now" type="submit" onclick="document.getElementById('orders').submit();" />
+          </form>
+        </div>
+      </div> 
+      <!-- Modal End -->
+      
+      
+      <div class="space">&nbsp;</div>
+      
+      <div class="content" style="margin:80px 0 0 0;">
+        <ul class="thumbnails">
+          {% for product in products %}
+          <li class="span3">
+            <a href="#myModal" role="button" data-toggle="modal" class="btn thumbnail" onclick='setProduct({{product.id}},"{{ product.name }}","{{ product.large_image }}","{{ product.price }}");'>
+              <img src="{{ product.cropped_image }}" title= "{{ product.name }} - {{ product.price }}"/>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      
+    </div><!-- .container-->
+    
+    
+    <div class="footer">
+      <div class="navbar navbar-fixed-bottom">
+        <div class="navbar-inner">
+          <div class="container" style="font-size:12px;text-align:center;padding:10px 0 0 0;color:#afafaf">
+            &copy; Copyright Paint! All rights reserved.
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
